@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_2667DC">
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/guide_gif"
+        android:layout_width="308dp"
+        android:layout_height="322dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:src="@mipmap/guide" />
+    <TextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="壹食安监管平台"
+        android:textSize="22sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/guide_gif"
+        android:textColor="@color/color_91B8FF"
+        android:layout_marginTop="67dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="多维度监管·数据一目了然"
+        android:layout_centerHorizontal="true"
+        android:textSize="13sp"
+        android:layout_below="@id/tv_app_name"
+        android:textColor="@color/color_91B8FF"
+        android:layout_marginTop="10dp"/>
+</RelativeLayout>
