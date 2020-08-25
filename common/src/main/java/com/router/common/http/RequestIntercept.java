@@ -1,6 +1,7 @@
 package com.router.common.http;
 
 
+import com.elvishew.xlog.XLog;
 import com.router.common.utils.ZipHelper;
 
 import java.io.ByteArrayOutputStream;
@@ -14,10 +15,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
-import timber.log.Timber;
-
-import static com.router.common.utils.CharactorHandler.jsonFormat;
-
 
 /**
  * Created by jess on 7/1/16.
@@ -35,25 +32,14 @@ public class RequestIntercept implements Interceptor {
         Buffer requestbuffer = new Buffer();
         if (request.body() != null) {
             request.body().writeTo(requestbuffer);
-        } else {
-            Timber.tag("Request").w("request.body() == null");
         }
-
-        if (mHandler != null)//在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
-            request = mHandler.onHttpRequestBefore(chain,request);
-
-        //打印url信息
-        Timber.tag("Request").w("Sending Request %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s", request.url()
-                , request.body() != null ? requestbuffer.readUtf8() : "null"
-                , chain.connection()
-                , request.headers());
-
+        //在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
+        if (mHandler != null) request = mHandler.onHttpRequestBefore(chain,request);
         long t1 = System.nanoTime();
         Response originalResponse = chain.proceed(request);
         long t2 = System.nanoTime();
         //打赢响应时间
-        Timber.tag("Response").w("Received response  in %.1fms%n%s", (t2 - t1) / 1e6d, originalResponse.headers());
-
+        XLog.d("Received response  in %.1fms%n%s", (t2 - t1) / 1e6d);
         //读取服务器返回的结果
         ResponseBody responseBody = originalResponse.body();
         BufferedSource source = responseBody.source();
@@ -89,11 +75,9 @@ public class RequestIntercept implements Interceptor {
             }
             bodyString = clone.readString(charset);
         }
-
-        Timber.tag("Result").w(jsonFormat(bodyString));
+        XLog.json(bodyString);
         if (mHandler != null)//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
            return mHandler.onHttpResultResponse(bodyString,chain,originalResponse);
-
         return originalResponse;
     }
 

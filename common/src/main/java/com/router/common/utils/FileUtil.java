@@ -3,6 +3,7 @@ package com.router.common.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 

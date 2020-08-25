@@ -23,14 +23,11 @@ public class CharactorHandler {
                 Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
 
         @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart,
-                                   int dend) {
-
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
             Matcher emojiMatcher = emoji.matcher(source);
             if (emojiMatcher.find()) {
                 return "";
             }
-
             return null;
         }
     };

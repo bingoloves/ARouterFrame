@@ -7,7 +7,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
+
 
 public class NetworkUtil {
 
@@ -37,7 +38,6 @@ public class NetworkUtil {
         if (null == cm) {
             return false;
         }
-
         NetworkInfo info = cm.getActiveNetworkInfo();
         if (null != info) {
             if (info.getType() == ConnectivityManager.TYPE_WIFI) {

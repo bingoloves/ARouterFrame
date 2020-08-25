@@ -1,6 +1,8 @@
 package com.router.common.utils;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 
@@ -9,7 +11,7 @@ import android.widget.Toast;
  */
 public class ToastUtils {
     private static Toast toast = null;
-
+    private static Handler mainHandler = new Handler(Looper.getMainLooper());
     /**
      * Toast发送消息，默认Toast.LENGTH_SHORT
      *
@@ -57,11 +59,19 @@ public class ToastUtils {
      * @param msg
      * @param len
      */
-    public static void showMessage(final Context act, final int msg,
-                                   final int len) {
-
-        toast = Toast.makeText(act, msg + "", len);
-        toast.show();
+    public static void showMessage(final Context act, final int msg, final int len) {
+        if (isMainThread()){
+            toast = Toast.makeText(act, msg + "", len);
+            toast.show();
+        } else {
+            mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    toast = Toast.makeText(act, msg + "", len);
+                    toast.show();
+                }
+            });
+        }
     }
 
     /**
@@ -71,11 +81,19 @@ public class ToastUtils {
      * @param msg
      * @param len
      */
-    public static void showMessage(final Context act, final String msg,
-                                   final int len) {
-
-        toast = Toast.makeText(act, msg, len);
-        toast.show();
+    public static void showMessage(final Context act, final String msg, final int len) {
+        if (isMainThread()){
+            toast = Toast.makeText(act, msg, len);
+            toast.show();
+        } else {
+            mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    toast = Toast.makeText(act, msg + "", len);
+                    toast.show();
+                }
+            });
+        }
     }
 
     /**
@@ -85,5 +103,13 @@ public class ToastUtils {
         if (toast != null) {
             toast.cancel();
         }
+    }
+
+    /**
+     * 判断当前是否在主线程
+     * @return
+     */
+    public static boolean isMainThread() {
+        return Looper.getMainLooper() == Looper.myLooper();
     }
 }

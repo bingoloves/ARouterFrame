@@ -19,7 +19,7 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -68,7 +68,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    OkHttpClient provideClient(Cache cache, Interceptor intercept) {
+    public OkHttpClient provideClient(Cache cache, Interceptor intercept) {
         final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
         return configureClient(okHttpClient, cache, intercept);
     }
@@ -83,34 +83,34 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    Retrofit provideRetrofit(OkHttpClient client, HttpUrl httpUrl) {
+    public Retrofit provideRetrofit(OkHttpClient client, HttpUrl httpUrl) {
         final Retrofit.Builder builder = new Retrofit.Builder();
         return configureRetrofit(builder, client, httpUrl);
     }
     @Singleton
     @Provides
-    HttpUrl provideBaseUrl() {
+    public HttpUrl provideBaseUrl() {
         return mApiUrl;
     }
 
     @Singleton
     @Provides
-    Cache provideCache(File cacheFile) {
+    public Cache provideCache(File cacheFile) {
         return new Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);//设置缓存路径和大小
     }
     @Singleton
     @Provides
-    Interceptor provideIntercept() {
+    public Interceptor provideIntercept() {
         return new RequestIntercept(mHandler);//打印请求信息的拦截器
     }
+
     /**
      * 提供缓存地址
      */
-
     @Singleton
     @Provides
-    File provideCacheFile(Application application) {
-        return SpUtil.getCacheFile(application);
+    public File provideCacheFile() {
+        return Utils.getApp().getCacheDir();
     }
 
     /**
@@ -121,7 +121,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxErrorHandler proRxErrorHandler(Application application) {
+    public RxErrorHandler proRxErrorHandler(Application application) {
         return RxErrorHandler
                 .builder()
                 .with(application)
@@ -136,7 +136,7 @@ public class ClientModule {
      */
     @Singleton
     @Provides
-    RxPermissions provideRxPermissions(Application application) {
+    public RxPermissions provideRxPermissions(Application application) {
         return RxPermissions.getInstance(application);
     }
     /**
@@ -152,7 +152,7 @@ public class ClientModule {
         return builder
                 .baseUrl(httpUrl)//域名
                 .client(client)//设置okhttp
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//使用rxjava
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//使用rxjava
                 .addConverterFactory(GsonConverterFactory.create())//使用Gson
                 .build();
     }
