@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_2667DC">
-    <pl.droidsonroids.gif.GifImageView
+    <!--<pl.droidsonroids.gif.GifImageView
         android:id="@+id/guide_gif"
         android:layout_width="308dp"
         android:layout_height="322dp"
@@ -29,5 +29,11 @@
         android:textSize="13sp"
         android:layout_below="@id/tv_app_name"
         android:textColor="@color/color_91B8FF"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"/>-->
+
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/kenBurnsView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/splash" />
 </RelativeLayout>

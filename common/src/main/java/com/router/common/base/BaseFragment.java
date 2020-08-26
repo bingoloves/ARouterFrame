@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
-    private View mRoot;
+    protected View mRoot;
     /**
      * 是否执行了lazyLoad方法
      */
@@ -69,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
             this.savedInstanceState = savedInstanceState;
             isCreateView = true;
             unbinder = ButterKnife.bind(this, mRoot);
-            initView(mRoot);
+            initView();
             initLazyLoad();
         }
         return mRoot;
@@ -116,9 +117,8 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 用于初始化相关组件
-     * @param view
      */
-    protected abstract void initView(View view);
+    protected abstract void initView();
 
     protected void toast(String msg){
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();

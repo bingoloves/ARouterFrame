@@ -5,4 +5,10 @@
     <color name="colorAccent">#FF4081</color>
     <color name="color_2667DC">#2667DC</color>
     <color name="color_91B8FF">#91B8FF</color>
+
+    <color name="bnv_itemActiveColorWithoutColoredBackground">#2196F3</color>
+    <color name="bnv_colorActive">#FFFFFF</color>
+    <color name="bnv_colorInactive">#e7e6e7</color>
+    <color name="bnv_withoutColoredBackground">#757575</color>
+    <color name="bnv_white">#ffffff</color>
 </resources>

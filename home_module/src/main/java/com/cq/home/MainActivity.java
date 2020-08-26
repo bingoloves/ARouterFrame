@@ -12,7 +12,6 @@ import com.router.common.RouteHelper;
 import com.router.common.base.BaseActivity;
 import com.router.common.http.RetrofitUtil;
 import com.router.common.utils.ToastUtils;
-
 import butterknife.BindView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

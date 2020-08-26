@@ -30,6 +30,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile rootProject.ext.dependencies["junit"]
+    implementation rootProject.ext.dependencies["scale-image-view"]//加载本地大图
+    implementation rootProject.ext.dependencies["twink-refresh"]//刷新库
+    implementation rootProject.ext.dependencies["advanced-webview"]//增强WebView
+    implementation rootProject.ext.dependencies["kenburnsview"]//动效库
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     implementation rootProject.ext.dependencies["annotations"]
