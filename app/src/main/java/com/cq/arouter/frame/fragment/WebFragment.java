@@ -68,7 +68,6 @@ public class WebFragment extends BaseFragment implements AdvancedWebView.Listene
         //上拉加载底部view设置
         LoadingView loadingView = new LoadingView(getContext());
         refreshLayout.setBottomView(loadingView);
-        refreshLayout.setHeaderHeight(80);
         //下拉刷新上拉加载事件监听
         refreshLayout.setOnRefreshListener(new RefreshListenerAdapter(){
             @Override

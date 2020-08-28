@@ -18,7 +18,7 @@ android {
             }
         }
     }
-
+    resourcePrefix "home_"//防止资源命名冲突
     buildTypes {
         release {
             minifyEnabled false

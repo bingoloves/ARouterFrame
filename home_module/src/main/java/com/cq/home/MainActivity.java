@@ -10,6 +10,8 @@ import com.elvishew.xlog.XLog;
 import com.router.common.ConfigConstants;
 import com.router.common.RouteHelper;
 import com.router.common.base.BaseActivity;
+import com.router.common.http.BaseObserver;
+import com.router.common.http.BaseResponse;
 import com.router.common.http.RetrofitUtil;
 import com.router.common.utils.ToastUtils;
 import butterknife.BindView;
@@ -41,29 +43,20 @@ public class MainActivity extends BaseActivity {
         XLog.d(allPath);
     }
     private void request(){
-        RetrofitUtil.get().getApiService().getNews("top")
+        RetrofitUtil.get().getApiService().testApi("top")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Observer<String>() {
+                .subscribe(new BaseObserver<BaseResponse>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    public void onSuccess(BaseResponse data) {
+                        XLog.e(data);
                     }
 
                     @Override
-                    public void onNext(String s) {
-                        XLog.d( s);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        XLog.e(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
+                    public void onFailure(String err) {
 
                     }
+
                 });
     }
 }

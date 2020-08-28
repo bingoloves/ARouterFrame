@@ -37,7 +37,7 @@ public class SplashActivity extends BaseActivity {
             }
             @Override
             public void onTransitionEnd(Transition transition) {
-                ARouter.getInstance().build(ConfigConstants.MAIN_MAIN).withString("key","bingo").navigation();
+                ARouter.getInstance().build(ConfigConstants.HOME_MAIN).withString("key","bingo").navigation();
                 finish();
             }
         });

@@ -4,8 +4,6 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.router.common.http.GlobeHttpHandler;
-import com.router.common.http.RequestIntercept;
 import com.router.common.rx.rxerrorhandler.ResponseErrorListener;
 import com.router.common.rx.rxerrorhandler.RxErrorHandler;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -31,7 +29,6 @@ public class ClientModule {
     private static final int TOME_OUT = 10;
     public static final int HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;//缓存文件最大值为10Mb
     private HttpUrl mApiUrl;
-    private GlobeHttpHandler mHandler;
     private Interceptor[] mInterceptors;
     private ResponseErrorListener mErroListener;
 
@@ -49,7 +46,6 @@ public class ClientModule {
      */
     private ClientModule(Buidler buidler) {
         this.mApiUrl = buidler.apiUrl;
-        this.mHandler = buidler.handler;
         this.mInterceptors = buidler.interceptors;
         this.mErroListener = buidler.responseErroListener;
     }
@@ -97,11 +93,6 @@ public class ClientModule {
     @Provides
     public Cache provideCache(File cacheFile) {
         return new Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE);//设置缓存路径和大小
-    }
-    @Singleton
-    @Provides
-    public Interceptor provideIntercept() {
-        return new RequestIntercept(mHandler);//打印请求信息的拦截器
     }
 
     /**
@@ -180,7 +171,6 @@ public class ClientModule {
 
     public static final class Buidler {
         private HttpUrl apiUrl = HttpUrl.parse("https://api.github.com/");
-        private GlobeHttpHandler handler;
         private Interceptor[] interceptors;
         private ResponseErrorListener responseErroListener;
 
@@ -192,11 +182,6 @@ public class ClientModule {
                 throw new IllegalArgumentException("baseurl can not be empty");
             }
             this.apiUrl = HttpUrl.parse(baseurl);
-            return this;
-        }
-
-        public Buidler globeHttpHandler(GlobeHttpHandler handler) {//用来处理http响应结果
-            this.handler = handler;
             return this;
         }
 

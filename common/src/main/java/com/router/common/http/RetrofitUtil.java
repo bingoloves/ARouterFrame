@@ -1,6 +1,8 @@
 package com.router.common.http;
 
 import com.router.common.BuildConfig;
+import com.router.common.interceptor.CommonInterceptor;
+import com.router.common.interceptor.RequestIntercept;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,18 +26,7 @@ public class RetrofitUtil {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
-//                .addInterceptor(new RequestIntercept(new GlobeHttpHandler() {
-//                    @Override
-//                    public Response onHttpResultResponse(String httpResult, Interceptor.Chain chain, Response response) {
-//                        return response;
-//                    }
-//
-//                    @Override
-//                    public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-//                        return request;
-//                    }
-//                }))
-//                .addInterceptor(new TokenInterceptor())
+                .addInterceptor(new CommonInterceptor())
 //                .cache(cache)
                 ;
         if (BuildConfig.DEBUG){
